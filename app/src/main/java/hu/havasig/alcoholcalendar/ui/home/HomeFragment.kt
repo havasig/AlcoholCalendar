@@ -9,8 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import hu.havasig.alcoholcalendar.R
+import hu.havasig.alcoholcalendar.ui.gallery.GalleryFragment
+import hu.havasig.alcoholcalendar.ui.gallery.GalleryViewModel
 
 class HomeFragment : Fragment() {
+
+	companion object {
+		fun newInstance() = HomeFragment()
+	}
 
 	private lateinit var homeViewModel: HomeViewModel
 
@@ -27,5 +33,11 @@ class HomeFragment : Fragment() {
 			textView.text = it
 		})
 		return root
+	}
+
+	override fun onActivityCreated(savedInstanceState: Bundle?) {
+		super.onActivityCreated(savedInstanceState)
+		homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+		// TODO: Use the ViewModel
 	}
 }

@@ -12,6 +12,10 @@ import hu.havasig.alcoholcalendar.R
 
 class GalleryFragment : Fragment() {
 
+	companion object {
+		fun newInstance() = GalleryFragment()
+	}
+
 	private lateinit var galleryViewModel: GalleryViewModel
 
 	override fun onCreateView(
@@ -27,5 +31,11 @@ class GalleryFragment : Fragment() {
 			textView.text = it
 		})
 		return root
+	}
+
+	override fun onActivityCreated(savedInstanceState: Bundle?) {
+		super.onActivityCreated(savedInstanceState)
+		galleryViewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
+		// TODO: Use the ViewModel
 	}
 }
