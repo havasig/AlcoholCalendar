@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
-		xmlns:tools="http://schemas.android.com/tools"
-		android:id="@+id/mobile_navigation"
-		app:startDestination="@+id/nav_home">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_menu">
 
-	<fragment
-			android:id="@+id/nav_home"
-			android:name="hu.havasig.alcoholcalendar.ui.home.HomeFragment"
-			android:label="@string/menu_home"
-			tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_menu"
+        android:name="hu.havasig.alcoholcalendar.ui.menu.MenuFragment"
+        android:label="@string/menu_menu"
+        tools:layout="@layout/fragment_menu" />
 
-	<fragment
-			android:id="@+id/nav_gallery"
-			android:name="hu.havasig.alcoholcalendar.ui.gallery.GalleryFragment"
-			android:label="@string/menu_gallery"
-			tools:layout="@layout/fragment_gallery" />
+    <fragment
+        android:id="@+id/nav_add_drink"
+        android:name="hu.havasig.alcoholcalendar.ui.addDrink.AddDrinkFragment"
+        android:label="@string/menu_add_drink"
+        tools:layout="@layout/fragment_add_drink" />
 
-	<fragment
-			android:id="@+id/nav_slideshow"
-			android:name="hu.havasig.alcoholcalendar.ui.slideshow.SlideshowFragment"
-			android:label="@string/menu_slideshow"
-			tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_my_drinks"
+        android:name="hu.havasig.alcoholcalendar.ui.myDrinks.MyDrinksFragment"
+        android:label="@string/menu_my_drinks"
+        tools:layout="@layout/fragment_my_drinks" />
+
+    <fragment
+        android:id="@+id/nav_calendar_view"
+        android:name="hu.havasig.alcoholcalendar.ui.calendarView.CalendarViewFragment"
+        android:label="@string/menu_calendar_view"
+        tools:layout="@layout/fragment_calendar_view" />
+
+    <fragment
+        android:id="@+id/nav_weekly_challenge"
+        android:name="hu.havasig.alcoholcalendar.ui.weeklyChallenge.WeeklyChallengeFragment"
+        android:label="@string/menu_weekly_challenge"
+        tools:layout="@layout/fragment_weekly_challenge" />
 </navigation>
