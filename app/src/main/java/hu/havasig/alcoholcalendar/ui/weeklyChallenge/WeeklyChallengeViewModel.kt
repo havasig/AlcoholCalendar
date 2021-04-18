@@ -1,4 +1,4 @@
-package hu.havasig.alcoholcalendar.ui.slideshow
+package hu.havasig.alcoholcalendar.ui.weeklyChallenge
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,9 +7,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SlideshowViewModel @Inject constructor(): ViewModel() {
+class WeeklyChallengeViewModel @Inject constructor(): ViewModel() {
 	private val _text = MutableLiveData<String>().apply {
-		value = "This is slideshow Fragment"
+		value = "This is weekly challenge Fragment"
 	}
 	val text: LiveData<String> = _text
 // TODO: Implement the ViewModel

@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 		val toolbar: Toolbar = findViewById(R.id.toolbar)
 		setSupportActionBar(toolbar)
 
-		val fab: FloatingActionButton = findViewById(R.id.fab)
+		val fab: FloatingActionButton = findViewById(R.id.fab_add_drink)
 		fab.setOnClickListener { view ->
 			Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 				.setAction("Action", null).show()
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 		// menu should be considered as top level destinations.
 		appBarConfiguration = AppBarConfiguration(
 			setOf(
-				R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+				R.id.nav_menu, R.id.nav_add_drink, R.id.nav_my_drinks, R.id.nav_calendar_view, R.id.nav_weekly_challenge
 			), drawerLayout
 		)
 		setupActionBarWithNavController(navController, appBarConfiguration)

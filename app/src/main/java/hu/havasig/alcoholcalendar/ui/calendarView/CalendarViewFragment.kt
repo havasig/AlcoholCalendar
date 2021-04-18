@@ -1,4 +1,4 @@
-package hu.havasig.alcoholcalendar.ui.gallery
+package hu.havasig.alcoholcalendar.ui.calendarView
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,24 +10,24 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import hu.havasig.alcoholcalendar.R
 
-class GalleryFragment : Fragment() {
+class CalendarViewFragment : Fragment() {
 
 	companion object {
-		fun newInstance() = GalleryFragment()
+		fun newInstance() = CalendarViewFragment()
 	}
 
-	private lateinit var galleryViewModel: GalleryViewModel
+	private lateinit var calendarViewViewModel: CalendarViewViewModel
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View? {
-		galleryViewModel =
-			ViewModelProvider(this).get(GalleryViewModel::class.java)
-		val root = inflater.inflate(R.layout.fragment_gallery, container, false)
-		val textView: TextView = root.findViewById(R.id.text_gallery)
-		galleryViewModel.text.observe(viewLifecycleOwner, Observer {
+		calendarViewViewModel =
+			ViewModelProvider(this).get(CalendarViewViewModel::class.java)
+		val root = inflater.inflate(R.layout.fragment_calendar_view, container, false)
+		val textView: TextView = root.findViewById(R.id.text_calendar_view)
+		calendarViewViewModel.text.observe(viewLifecycleOwner, Observer {
 			textView.text = it
 		})
 		return root
@@ -35,7 +35,7 @@ class GalleryFragment : Fragment() {
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
-		galleryViewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
+		calendarViewViewModel = ViewModelProvider(this).get(CalendarViewViewModel::class.java)
 		// TODO: Use the ViewModel
 	}
 }

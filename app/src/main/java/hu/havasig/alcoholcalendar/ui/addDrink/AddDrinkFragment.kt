@@ -1,4 +1,4 @@
-package hu.havasig.alcoholcalendar.ui.home
+package hu.havasig.alcoholcalendar.ui.addDrink
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,27 +9,25 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import hu.havasig.alcoholcalendar.R
-import hu.havasig.alcoholcalendar.ui.gallery.GalleryFragment
-import hu.havasig.alcoholcalendar.ui.gallery.GalleryViewModel
 
-class HomeFragment : Fragment() {
+class AddDrinkFragment : Fragment() {
 
 	companion object {
-		fun newInstance() = HomeFragment()
+		fun newInstance() = AddDrinkFragment()
 	}
 
-	private lateinit var homeViewModel: HomeViewModel
+	private lateinit var addDrinkViewModel: AddDrinkViewModel
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View? {
-		homeViewModel =
-			ViewModelProvider(this).get(HomeViewModel::class.java)
-		val root = inflater.inflate(R.layout.fragment_home, container, false)
-		val textView: TextView = root.findViewById(R.id.text_home)
-		homeViewModel.text.observe(viewLifecycleOwner, Observer {
+		addDrinkViewModel =
+			ViewModelProvider(this).get(AddDrinkViewModel::class.java)
+		val root = inflater.inflate(R.layout.fragment_add_drink, container, false)
+		val textView: TextView = root.findViewById(R.id.text_add_drink)
+		addDrinkViewModel.text.observe(viewLifecycleOwner, Observer {
 			textView.text = it
 		})
 		return root
@@ -37,7 +35,7 @@ class HomeFragment : Fragment() {
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
-		homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+		addDrinkViewModel = ViewModelProvider(this).get(AddDrinkViewModel::class.java)
 		// TODO: Use the ViewModel
 	}
 }
