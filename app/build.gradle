@@ -53,4 +53,14 @@ dependencies {
 	// Add Dagger Hilt
 	implementation "com.google.dagger:hilt-android:$hilt_version"
 	kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+	//Add Retrofit
+	implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.9.0'
+
+	//Add okhttp
+	implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.9.1'
+
+	//Add gson
+	implementation group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.9.0'
+
 }
