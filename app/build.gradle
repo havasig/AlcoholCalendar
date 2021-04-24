@@ -59,6 +59,8 @@ dependencies {
 
 	//Add okhttp
 	implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.9.1'
+	implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '4.9.1'
+
 
 	//Add gson
 	implementation group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.9.0'
