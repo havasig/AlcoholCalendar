@@ -2,10 +2,12 @@ package hu.havasig.alcoholcalendar.network
 
 import dagger.Module
 import dagger.Provides
-import hu.havasig.alcoholcalendar.network.api.ChallengeApi
-import hu.havasig.alcoholcalendar.network.api.DrinkApi
-import hu.havasig.alcoholcalendar.network.api.DrinkTypesApi
-import hu.havasig.alcoholcalendar.network.api.StatisticsApi
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
+import hu.havasig.alcoholcalendar.data.api.ChallengeApi
+import hu.havasig.alcoholcalendar.data.api.DrinkApi
+import hu.havasig.alcoholcalendar.data.api.DrinkTypeApi
+import hu.havasig.alcoholcalendar.data.api.StatisticApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -13,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
+@InstallIn(ActivityComponent::class)
 class NetworkModule {
 	@Provides
 	@Singleton
@@ -46,23 +49,23 @@ class NetworkModule {
 
 	@Provides
 	@Singleton
-	fun provideDrinkTypesApi(client: OkHttpClient): DrinkTypesApi {
+	fun provideDrinkTypesApi(client: OkHttpClient): DrinkTypeApi {
 		val retrofit = Retrofit.Builder()
 			.client(client)
 			.baseUrl(NetworkConfig.DRINK_TYPE_API_ADDRESS)
 			.addConverterFactory(GsonConverterFactory.create())
 			.build()
-		return retrofit.create(DrinkTypesApi::class.java)
+		return retrofit.create(DrinkTypeApi::class.java)
 	}
 
 	@Provides
 	@Singleton
-	fun provideStatisticsApi(client: OkHttpClient): StatisticsApi {
+	fun provideStatisticsApi(client: OkHttpClient): StatisticApi {
 		val retrofit = Retrofit.Builder()
 			.client(client)
 			.baseUrl(NetworkConfig.STATISTICS_API_ADDRESS)
 			.addConverterFactory(GsonConverterFactory.create())
 			.build()
-		return retrofit.create(StatisticsApi::class.java)
+		return retrofit.create(StatisticApi::class.java)
 	}
 }

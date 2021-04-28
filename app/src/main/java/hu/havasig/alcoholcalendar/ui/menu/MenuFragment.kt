@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import hu.havasig.alcoholcalendar.R
 
+@AndroidEntryPoint
 class MenuFragment : Fragment() {
 
 	companion object {
@@ -27,9 +30,20 @@ class MenuFragment : Fragment() {
 			ViewModelProvider(this).get(MenuViewModel::class.java)
 		val root = inflater.inflate(R.layout.fragment_menu, container, false)
 		val textView: TextView = root.findViewById(R.id.text_menu)
-		menuViewModel.text.observe(viewLifecycleOwner, Observer {
-			textView.text = it
+		menuViewModel.statistics.observe(viewLifecycleOwner, {
+			if (it != null) {
+				textView.text = it.last7Days?.from.toString()
+			} else {
+				textView.text = "Statistics are not available"
+			}
 		})
+
+		val fab: FloatingActionButton = root.findViewById(R.id.fab_add_drink)
+		fab.setOnClickListener { view ->
+			Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+				.setAction("Action", null).show()
+		}
+
 		return root
 	}
 

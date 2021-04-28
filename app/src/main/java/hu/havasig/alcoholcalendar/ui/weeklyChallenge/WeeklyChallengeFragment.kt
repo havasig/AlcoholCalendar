@@ -8,8 +8,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import hu.havasig.alcoholcalendar.R
 
+@AndroidEntryPoint
 class WeeklyChallengeFragment : Fragment() {
 
 	companion object {
@@ -27,8 +29,12 @@ class WeeklyChallengeFragment : Fragment() {
 			ViewModelProvider(this).get(WeeklyChallengeViewModel::class.java)
 		val root = inflater.inflate(R.layout.fragment_weekly_challenge, container, false)
 		val textView: TextView = root.findViewById(R.id.text_weekly_challenge)
-		weeklyChallengeViewModel.text.observe(viewLifecycleOwner, Observer {
-			textView.text = it
+		weeklyChallengeViewModel.currentChallenges.observe(viewLifecycleOwner, Observer {
+			if (it.isNotEmpty()) {
+				it.forEach { challenge -> textView.text = "${textView.text} ${challenge.name}" }
+				textView.text = it[0].name
+			} else
+				textView.text = "You have no available challenges"
 		})
 		return root
 	}

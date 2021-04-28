@@ -53,6 +53,9 @@ dependencies {
 	// Add Dagger Hilt
 	implementation "com.google.dagger:hilt-android:$hilt_version"
 	kapt "com.google.dagger:hilt-compiler:$hilt_version"
+	kapt "androidx.hilt:hilt-compiler:$androidx_hilt_version"
+	implementation "androidx.hilt:hilt-lifecycle-viewmodel:$androidx_hilt_version"
+	annotationProcessor 'com.google.dagger:hilt-android-compiler:2.30-alpha'
 
 	//Add Retrofit
 	implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.9.0'
@@ -61,8 +64,16 @@ dependencies {
 	implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.9.1'
 	implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '4.9.1'
 
-
 	//Add gson
 	implementation group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.9.0'
+
+	//Add room
+	def room_version = "2.3.0"
+	implementation "androidx.room:room-runtime:$room_version"
+	kapt "androidx.room:room-compiler:$room_version"
+	// optional - Kotlin Extensions and Coroutines support for Room
+	implementation "androidx.room:room-ktx:$room_version"
+	// optional - Test helpers
+	testImplementation "androidx.room:room-testing:$room_version"
 
 }

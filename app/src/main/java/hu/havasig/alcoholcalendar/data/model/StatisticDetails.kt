@@ -1,13 +1,13 @@
-package hu.havasig.alcoholcalendar.models
+package hu.havasig.alcoholcalendar.data.model
 
 import com.google.gson.annotations.SerializedName
-import java.time.LocalDate
+import java.util.*
 
 data class StatisticDetails (
     @SerializedName("id")
-    val from: LocalDate? = null,
+    val from: Date? = null,
     @SerializedName("id")
-    val to: LocalDate? = null,
+    val to: Date? = null,
     @SerializedName("drink_types")
     var drinkTypes: MutableList<DrinkType> = mutableListOf()
 )

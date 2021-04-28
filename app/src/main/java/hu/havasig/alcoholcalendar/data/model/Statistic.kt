@@ -1,8 +1,8 @@
-package hu.havasig.alcoholcalendar.models
+package hu.havasig.alcoholcalendar.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Statistics (
+data class Statistic (
     @SerializedName("last_7_days")
     val last7Days: StatisticDetails? = null,
     @SerializedName("last_week")
