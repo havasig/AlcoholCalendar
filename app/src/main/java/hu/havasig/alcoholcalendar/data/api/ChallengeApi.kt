@@ -4,21 +4,25 @@ import hu.havasig.alcoholcalendar.data.model.Challenge
 import retrofit2.http.*
 
 interface ChallengeApi {
+	//ADMIN, only on connection
 	@POST("challenge")
 	suspend fun createChallenge(@Body challenge: Challenge)
 
-	@GET("challenge/{id}")
-	suspend fun getChallenge(@Path("id") challengeId: Int): Challenge
-
+	//ADMIN, only on connection
 	@PUT("challenge/{id}")
-	suspend fun updateChallenge(@Path("id") challengeId: Int, @Body challenge: Challenge): Challenge
+	suspend fun updateChallenge(@Path("id") challengeId: Int, @Body challenge: Challenge)
 
+	//ADMIN, only on connection
 	@DELETE("challenge/{id}")
 	suspend fun deleteChallenge(@Path("id") challengeId: Int)
 
-	@POST("challenge({id}/apply")
+	@POST("challenge/{id}/apply")
 	suspend fun applyToChallenge(@Path("id") challengeId: Int)
 
-	@GET("challenge/current")
-	suspend fun getCurrentChallenges(): List<Challenge>
+	@PUT("challenge")
+	suspend fun updateChallenges(@Body challenges: List<Challenge>): List<Challenge>
+
+	//probably no need
+	@GET("challenge/{id}")
+	suspend fun getChallenge(@Path("id") challengeId: Int): Challenge
 }

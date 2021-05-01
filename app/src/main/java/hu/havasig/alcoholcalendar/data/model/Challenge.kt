@@ -9,17 +9,17 @@ import java.util.*
 data class Challenge (
     @SerializedName("id")
     @PrimaryKey
-    var id: Long? = null,
+    var id: Int,
     @SerializedName("name")
-    var name: String? = null,
+    var name: String,
     @SerializedName("description")
-    var description: String? = null,
+    var description: String,
     @SerializedName("image_url")
     var imageUrl: String? = null,
     @SerializedName("start_date")
     var startDate: Date,
     @SerializedName("end_date")
     var endDate: Date,
-    @SerializedName("last_update")
-    var lastUpdate: Date
+    @SerializedName("am_i_applied")
+    var amIApplied: Boolean
 )

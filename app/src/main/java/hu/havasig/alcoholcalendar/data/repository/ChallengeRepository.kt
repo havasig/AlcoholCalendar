@@ -25,20 +25,57 @@ class ChallengeRepository @Inject constructor(
 		}
 		currentChallenges.postValue(activeChallenges)
 		try {
-			val response = challengeService.getCurrentChallenges()
-			currentChallenges.postValue(response)
+			val response = challengeService.updateChallenges(challenges)
+			val activeChallengesFromServer = response.filter { challenge ->
+				challenge.startDate.before(currentDate) && challenge.endDate.after(currentDate)
+			}
+			currentChallenges.postValue(activeChallengesFromServer)
 			challengeDao.save(response)
 		} catch (e: Exception) {
 			e.printStackTrace()
 		}
 	}
 
-	suspend fun createChallenge(challenge: Challenge) {
+	suspend fun applyToChallenge(challenge: Challenge) {
+		challenge.amIApplied = true
 		try {
-			challengeService.createChallenge(challenge)
-			challengeDao.save(challenge)
+			challengeService.applyToChallenge(challenge.id)
 		} catch (e: Exception) {
 			e.printStackTrace()
+		}
+		challengeDao.save(challenge)
+	}
+
+	suspend fun createChallenge(challenge: Challenge): Boolean {
+		return try {
+			challengeService.createChallenge(challenge)
+			challengeDao.save(challenge)
+			true
+		} catch (e: Exception) {
+			e.printStackTrace()
+			false
+		}
+	}
+
+	suspend fun updateChallenge(challenge: Challenge): Boolean {
+		return try {
+			challengeService.updateChallenge(challenge.id, challenge)
+			challengeDao.save(challenge)
+			true
+		} catch (e: Exception) {
+			e.printStackTrace()
+			false
+		}
+	}
+
+	suspend fun deleteChallenge(challenge: Challenge): Boolean {
+		return try {
+			challengeService.deleteChallenge(challenge.id)
+			challengeDao.save(challenge)
+			true
+		} catch (e: Exception) {
+			e.printStackTrace()
+			false
 		}
 	}
 }

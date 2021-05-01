@@ -10,7 +10,7 @@ import java.util.*
 data class Drink(
     @PrimaryKey
     @SerializedName("id")
-    var id: Int? = null,
+    var id: Int,
     @SerializedName("server_id")
     var serverId: Int? = null,
     @SerializedName("name")
