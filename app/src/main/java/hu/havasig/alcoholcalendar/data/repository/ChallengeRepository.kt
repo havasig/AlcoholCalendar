@@ -21,13 +21,13 @@ class ChallengeRepository @Inject constructor(
 		val challenges = challengeDao.getAll()
 		val currentDate = Calendar.getInstance().time
 		val activeChallenges = challenges.filter { challenge ->
-			challenge.startDate.before(currentDate) && challenge.endDate.after(currentDate)
+			challenge.startDate.before(currentDate) && challenge.endDate.after(currentDate) && !challenge.isDeleted
 		}
 		currentChallenges.postValue(activeChallenges)
 		try {
 			val response = challengeService.updateChallenges(challenges)
 			val activeChallengesFromServer = response.filter { challenge ->
-				challenge.startDate.before(currentDate) && challenge.endDate.after(currentDate)
+				challenge.startDate.before(currentDate) && challenge.endDate.after(currentDate) && !challenge.isDeleted
 			}
 			currentChallenges.postValue(activeChallengesFromServer)
 			challengeDao.save(response)
@@ -69,6 +69,7 @@ class ChallengeRepository @Inject constructor(
 	}
 
 	suspend fun deleteChallenge(challenge: Challenge): Boolean {
+		challenge.isDeleted = true
 		return try {
 			challengeService.deleteChallenge(challenge.id)
 			challengeDao.save(challenge)

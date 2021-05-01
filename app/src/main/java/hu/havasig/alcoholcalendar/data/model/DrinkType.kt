@@ -8,11 +8,13 @@ import com.google.gson.annotations.SerializedName
 data class DrinkType (
     @SerializedName("id")
     @PrimaryKey
-    val id: Int? = null,
+    var id: Int,
     @SerializedName("name")
-    val name: String,
+    var name: String,
     @SerializedName("percentage")
-    val percentage: Int? = null,
+    var percentage: Int,
     @SerializedName("amount")
-    val amount: Double? = null
+    var amount: Double,
+    @SerializedName("is_deleted")
+    var isDeleted: Boolean
 )

@@ -13,6 +13,9 @@ interface DrinkTypeApi {
 	@POST("drink-type")
 	suspend fun addDrinkType(@Body drinkType: DrinkType)
 
+	@PUT("drink-type")
+	suspend fun updateType(@Body drinkTypes: List<DrinkType>): List<DrinkType>
+
 	@DELETE("drink-type/{id}")
 	suspend fun deleteDrinkType(@Path("id") drinkTypeId: Int)
 }

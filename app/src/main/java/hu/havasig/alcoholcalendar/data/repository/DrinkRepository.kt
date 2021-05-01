@@ -7,7 +7,6 @@ import hu.havasig.alcoholcalendar.data.api.DrinkApi
 import hu.havasig.alcoholcalendar.data.api.ServiceBuilder
 import hu.havasig.alcoholcalendar.data.dao.DrinkDao
 import hu.havasig.alcoholcalendar.data.model.Drink
-import java.util.*
 import javax.inject.Inject
 
 class DrinkRepository @Inject constructor(
@@ -19,17 +18,17 @@ class DrinkRepository @Inject constructor(
 	val myDrinks = MutableLiveData<List<Drink>>()
 
 	suspend fun updateDrinks() {
-		myDrinks.postValue(drinkDao.getAll())
+		val currentDrinks = drinkDao.getAll()
+		myDrinks.postValue(currentDrinks.filter { drink -> !drink.isDeleted })
 		try {
-			val currentDrinks = drinkDao.getAll()
 			for (drink in currentDrinks) {
 				if (drink.serverId == null) {
 					createDrink(drink)
 				}
 			}
 			val serverDrinks = drinkService.updateDrinks(currentDrinks)
+			myDrinks.postValue(drinkDao.getAll().filter { drink -> !drink.isDeleted })
 			drinkDao.save(serverDrinks)
-			myDrinks.postValue(drinkDao.getAll())
 		} catch (e: Exception) {
 			e.printStackTrace()
 			//no need to update without connection

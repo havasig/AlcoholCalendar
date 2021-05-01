@@ -16,9 +16,9 @@ class AddDrinkViewModel @Inject constructor(
 ) : ViewModel() {
 	val drinkTypes = drinkTypeRepository.myDrinkTypes
 
-	fun getMyDrinkTypes() {
+	fun updateMyDrinkTypes() {
 		viewModelScope.launch {
-			drinkTypeRepository.getMyDrinkTypes()
+			drinkTypeRepository.updateMyDrinkTypes()
 		}
 	}
 

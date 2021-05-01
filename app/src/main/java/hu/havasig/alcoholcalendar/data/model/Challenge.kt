@@ -21,5 +21,7 @@ data class Challenge (
     @SerializedName("end_date")
     var endDate: Date,
     @SerializedName("am_i_applied")
-    var amIApplied: Boolean
+    var amIApplied: Boolean,
+    @SerializedName("is_deleted")
+    var isDeleted: Boolean
 )

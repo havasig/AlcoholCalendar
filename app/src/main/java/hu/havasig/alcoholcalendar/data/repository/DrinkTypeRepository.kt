@@ -18,14 +18,25 @@ class DrinkTypeRepository @Inject constructor(
 
 	val myDrinkTypes = MutableLiveData<List<DrinkType>>()
 
-	suspend fun getMyDrinkTypes() {
-		myDrinkTypes.postValue(drinkTypeDao.getAll())
+	suspend fun updateMyDrinkTypes() {
+		val currentDrinkTypes = drinkTypeDao.getAll()
+		myDrinkTypes.postValue(currentDrinkTypes.filter { drinkType -> !drinkType.isDeleted })
 		try {
-			val response = drinkTypeService.getDrinkTypes()
-			myDrinkTypes.postValue(response)
+			val response = drinkTypeService.updateType(currentDrinkTypes)
+			myDrinkTypes.postValue(currentDrinkTypes.filter { drinkType -> !drinkType.isDeleted })
 			drinkTypeDao.save(response)
 		} catch (e: Exception) {
 			e.printStackTrace()
 		}
+	}
+
+	suspend fun deleteDrinkType(drinkType: DrinkType) {
+		drinkType.isDeleted = true
+		try {
+			drinkTypeService.deleteDrinkType(drinkType.id)
+		} catch (e: Exception) {
+			e.printStackTrace()
+		}
+		drinkTypeDao.save(drinkType)
 	}
 }
