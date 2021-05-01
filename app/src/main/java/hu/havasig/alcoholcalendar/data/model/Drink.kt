@@ -11,7 +11,7 @@ data class Drink(
     @PrimaryKey
     @SerializedName("id")
     var id: Int? = null,
-    @SerializedName("server-id")
+    @SerializedName("server_id")
     var serverId: Int? = null,
     @SerializedName("name")
     var name: String,
@@ -20,5 +20,9 @@ data class Drink(
     @SerializedName("amount")
     var amount: Double? = null,
     @SerializedName("date")
-    var date: Date? = null
+    var date: Date? = null,
+    @SerializedName("last_update")
+    var lastUpdate: Date,
+    @SerializedName("is_deleted")
+    var isDeleted: Boolean = false
 )

@@ -19,5 +19,7 @@ data class Challenge (
     @SerializedName("start_date")
     var startDate: Date,
     @SerializedName("end_date")
-    var endDate: Date
+    var endDate: Date,
+    @SerializedName("last_update")
+    var lastUpdate: Date
 )

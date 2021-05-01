@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import hu.havasig.alcoholcalendar.R
 import hu.havasig.alcoholcalendar.data.model.Drink
+import java.time.LocalDate
+import java.util.*
 
 @AndroidEntryPoint
 class AddDrinkFragment : Fragment() {
@@ -30,7 +32,7 @@ class AddDrinkFragment : Fragment() {
 			ViewModelProvider(this).get(AddDrinkViewModel::class.java)
 		val root = inflater.inflate(R.layout.fragment_add_drink, container, false)
 		val textView: TextView = root.findViewById(R.id.text_add_drink)
-		addDrinkViewModel.createDrink(Drink(1,2,"beer", 30, 2.0, null))
+		addDrinkViewModel.createDrink(Drink(1,null,"beer", 30, 2.0, null, Calendar.getInstance().time))
 		addDrinkViewModel.getMyDrinkTypes()
 		addDrinkViewModel.drinkTypes.observe(viewLifecycleOwner, {
 			if (it.isNotEmpty()) {

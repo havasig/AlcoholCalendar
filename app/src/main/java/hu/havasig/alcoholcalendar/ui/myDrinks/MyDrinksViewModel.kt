@@ -13,15 +13,9 @@ import javax.inject.Inject
 class MyDrinksViewModel @Inject constructor(private val drinkRepository: DrinkRepository) : ViewModel() {
 	var drinks: LiveData<List<Drink>> = drinkRepository.myDrinks
 
-	init {
+	fun updateDrinks() {
 		viewModelScope.launch {
-			drinkRepository.updateDrinkList()
-		}
-	}
-
-	fun getMyDrinks() {
-		viewModelScope.launch {
-			drinkRepository.getMyDrinks()
+			drinkRepository.updateDrinks()
 		}
 	}
 }

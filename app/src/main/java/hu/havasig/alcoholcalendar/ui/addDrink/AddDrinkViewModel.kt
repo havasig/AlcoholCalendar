@@ -33,4 +33,10 @@ class AddDrinkViewModel @Inject constructor(
 			drinkRepository.updateDrink(drinkId, drink)
 		}
 	}
+
+	fun deleteDrink(drink: Drink) {
+		viewModelScope.launch {
+			drinkRepository.deleteDrink(drink)
+		}
+	}
 }

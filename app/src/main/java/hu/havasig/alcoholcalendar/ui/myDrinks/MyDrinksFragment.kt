@@ -28,7 +28,7 @@ class MyDrinksFragment : Fragment() {
 			ViewModelProvider(this).get(MyDrinksViewModel::class.java)
 		val root = inflater.inflate(R.layout.fragment_my_drinks, container, false)
 		val textView: TextView = root.findViewById(R.id.text_my_drinks)
-		myDrinksViewModel.getMyDrinks()
+		myDrinksViewModel.updateDrinks()
 		myDrinksViewModel.drinks.observe(viewLifecycleOwner, {
 			if (it.isNotEmpty()) {
 				it.forEach { drink -> textView.text = "${textView.text} ${drink.name}" }
