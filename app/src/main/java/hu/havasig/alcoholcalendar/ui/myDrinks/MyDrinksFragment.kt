@@ -4,20 +4,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import hu.havasig.alcoholcalendar.R
+import hu.havasig.alcoholcalendar.data.model.Drink
+
 
 @AndroidEntryPoint
-class MyDrinksFragment : Fragment() {
+class MyDrinksFragment :
+	Fragment(),
+	MyDrinksAdapter.OnDrinkClickedListener {
 
 	companion object {
 		fun newInstance() = MyDrinksFragment()
 	}
 
 	private lateinit var myDrinksViewModel: MyDrinksViewModel
+	private lateinit var myDrinksRecyclerView: RecyclerView
+	private lateinit var noDrinkLL: LinearLayout
+	private lateinit var myDrinksAdapter: MyDrinksAdapter
+	private val myDrinks: ArrayList<Drink> = ArrayList()
+	private var rootlayout: View? = null
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -26,22 +39,52 @@ class MyDrinksFragment : Fragment() {
 	): View? {
 		myDrinksViewModel =
 			ViewModelProvider(this).get(MyDrinksViewModel::class.java)
-		val root = inflater.inflate(R.layout.fragment_my_drinks, container, false)
-		val textView: TextView = root.findViewById(R.id.text_my_drinks)
+		rootlayout = inflater.inflate(R.layout.fragment_my_drinks, container, false)
+		myDrinksRecyclerView = rootlayout!!.findViewById(R.id.myDrinksRV)
+		noDrinkLL = rootlayout!!.findViewById(R.id.noDrinkLL)
+		myDrinksAdapter = MyDrinksAdapter(this@MyDrinksFragment, myDrinks)
+		return rootlayout
+	}
+
+	override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(itemView, savedInstanceState)
+		myDrinksRecyclerView.apply {
+			layoutManager = LinearLayoutManager(activity)
+			adapter = myDrinksAdapter
+		}
+
 		myDrinksViewModel.updateDrinks()
 		myDrinksViewModel.drinks.observe(viewLifecycleOwner, {
 			if (it.isNotEmpty()) {
-				it.forEach { drink -> textView.text = "${textView.text} ${drink.name}" }
-				textView.text = it[0].name
-			} else
-				textView.text = "You have no drink"
+				myDrinks.clear()
+				myDrinks.addAll(it)
+				myDrinksAdapter.notifyDataSetChanged()
+			} else {
+				myDrinks.clear()
+				myDrinksAdapter.notifyDataSetChanged()
+				noDrinkLL.visibility = View.VISIBLE
+			}
 		})
-		return root
 	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
 		myDrinksViewModel = ViewModelProvider(this).get(MyDrinksViewModel::class.java)
 		// TODO: Use the ViewModel
+	}
+
+	override fun onDrinkEdit(drink: Drink) {
+		Toast.makeText(activity, "onDrinkEdit", Toast.LENGTH_SHORT).show()
+	}
+
+	override fun onDrinkDelete(viewHolder: MyDrinksAdapter.ViewHolder, drink: Drink) {
+		myDrinksViewModel.deleteDrink(drink)
+		val viewHolderPosition = myDrinksAdapter.onDrinkRemove(viewHolder)
+		Snackbar.make(rootlayout!!, "onDrinkDelete", Snackbar.LENGTH_LONG)
+			.setAction(R.string.undo_string) {
+				myDrinksAdapter.onDrinkRemoveUndo(viewHolderPosition)
+				myDrinksViewModel.restoreDrink(drink.id)
+			}
+			.show()
 	}
 }

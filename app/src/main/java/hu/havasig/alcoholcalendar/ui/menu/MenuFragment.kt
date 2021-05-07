@@ -29,12 +29,20 @@ class MenuFragment : Fragment() {
 		menuViewModel =
 			ViewModelProvider(this).get(MenuViewModel::class.java)
 		val root = inflater.inflate(R.layout.fragment_menu, container, false)
-		val textView: TextView = root.findViewById(R.id.text_menu)
+		val last7DaysDate: TextView = root.findViewById(R.id.last7DaysDate)
+		val last7DaysBeer: TextView = root.findViewById(R.id.last7DaysBeerValue)
+		val last7DaysWine: TextView = root.findViewById(R.id.last7DaysWineValue)
+		val last7DaysCocktails: TextView = root.findViewById(R.id.last7DaysCocktailsValue)
+		val last7DaysShots: TextView = root.findViewById(R.id.last7DaysShotsValue)
 		menuViewModel.statistics.observe(viewLifecycleOwner, {
 			if (it != null) {
-				textView.text = it.last7Days?.from.toString()
+				last7DaysDate.text = it.last7Days?.from.toString()
 			} else {
-				textView.text = "Statistics are not available"
+				last7DaysDate.text = "(2021.02.02 - 2021.02.02)"
+				last7DaysBeer.text = "5.5 l"
+				last7DaysWine.text = "0.75 l"
+				last7DaysCocktails.text = "1.2 l"
+				last7DaysShots.text = "0.32 l"
 			}
 		})
 

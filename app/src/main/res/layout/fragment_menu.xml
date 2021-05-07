@@ -1,32 +1,454 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
-		xmlns:tools="http://schemas.android.com/tools"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		tools:context=".ui.menu.MenuFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.menu.MenuFragment">
 
-	<TextView
-			android:id="@+id/text_menu"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:layout_marginTop="8dp"
-			android:layout_marginEnd="8dp"
-			android:textAlignment="center"
-			android:textSize="20sp"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintBottom_toBottomOf="parent" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_drink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
-	<com.google.android.material.floatingactionbutton.FloatingActionButton
-		android:id="@+id/fab_add_drink"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="bottom|end"
-		android:layout_margin="@dimen/fab_margin"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:srcCompat="@android:drawable/ic_input_add" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:context=".ui.menu.MenuFragment"
+            tools:layout_editor_absoluteY="1dp">
+
+            <TextView
+                android:id="@+id/last7Days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/last_7_days"
+                android:textAlignment="center"
+                android:textSize="@dimen/statistic_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/last7DaysDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/date"
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/last7Days"
+                android:paddingBottom="16dp" />
+
+            <LinearLayout
+                android:id="@+id/last7DaysLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/last7DaysDate">
+
+                <ImageView
+                    android:id="@+id/beer"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_gravity="center"
+                    android:padding="5dip"
+                    android:layout_marginEnd="50dp"
+                    android:src="@drawable/ic_beer" />
+
+                <LinearLayout
+                    android:id="@+id/last7DaysDetailsLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/last7DaysImageLL"
+                    app:layout_constraintTop_toBottomOf="@+id/last7Days">
+
+                    <LinearLayout
+                        android:id="@+id/last7DaysBeerLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/last7DaysBeer"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@string/total_beer"
+                            android:textSize="@dimen/statistic_details"/>
+
+                        <TextView
+                            android:id="@+id/last7DaysBeerValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/total_beer_value"
+                            android:textSize="@dimen/statistic_details"
+                            android:paddingStart="@dimen/statistic_details_padding" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/last7DaysWineLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/last7DaysWine"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@string/total_wine"
+                            android:textSize="@dimen/statistic_details"/>
+
+                        <TextView
+                            android:id="@+id/last7DaysWineValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/total_wine_value"
+                            android:textSize="@dimen/statistic_details"
+                            android:paddingStart="@dimen/statistic_details_padding"  />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/last7DaysCocktailsLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/last7DaysCocktails"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@string/total_cocktails"
+                            android:textSize="@dimen/statistic_details" />
+
+                        <TextView
+                            android:id="@+id/last7DaysCocktailsValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/total_cocktail_value"
+                            android:textSize="@dimen/statistic_details"
+                            android:paddingStart="@dimen/statistic_details_padding"  />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/last7DaysShotsLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/last7DaysShots"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@string/total_shots"
+                            android:textSize="@dimen/statistic_details" />
+
+                        <TextView
+                            android:id="@+id/last7DaysShotsValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/total_shot_value"
+                            android:textSize="@dimen/statistic_details"
+                            android:paddingStart="@dimen/statistic_details_padding" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/lastWeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/last_week"
+                android:textAlignment="center"
+                android:textSize="@dimen/statistic_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/last7DaysLL" />
+
+            <ImageView
+                android:id="@+id/wine"
+                android:layout_width="165dp"
+                android:layout_height="165dp"
+                android:padding="5dip"
+                android:src="@drawable/ic_wine"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lastWeek" />
+
+            <TextView
+                android:id="@+id/lastWeekStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/from"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toEndOf="@+id/wine"
+                app:layout_constraintTop_toBottomOf="@+id/lastWeek" />
+
+            <TextView
+                android:id="@+id/lastWeekEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/end"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toEndOf="@+id/wine"
+                app:layout_constraintTop_toBottomOf="@+id/lastWeekStart" />
+
+            <TextView
+                android:id="@+id/lastWeekBeer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_beer"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toEndOf="@+id/wine"
+                app:layout_constraintTop_toBottomOf="@+id/lastWeekEnd" />
+
+            <TextView
+                android:id="@+id/lastWeekWine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_wine"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toEndOf="@+id/wine"
+                app:layout_constraintTop_toBottomOf="@+id/lastWeekBeer" />
+
+            <TextView
+                android:id="@+id/lastWeekCocktails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_cocktails"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toEndOf="@+id/wine"
+                app:layout_constraintTop_toBottomOf="@+id/lastWeekWine" />
+
+            <TextView
+                android:id="@+id/lastWeekShots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_shots"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toEndOf="@+id/wine"
+                app:layout_constraintTop_toBottomOf="@+id/lastWeekCocktails" />
+
+
+            <TextView
+                android:id="@+id/lastMonth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/last_month"
+                android:textAlignment="center"
+                android:textSize="@dimen/statistic_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wine" />
+
+            <ImageView
+                android:id="@+id/cocktail"
+                android:layout_width="165dp"
+                android:layout_height="165dp"
+                android:padding="5dip"
+                android:src="@drawable/ic_cocktail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lastMonth" />
+
+            <TextView
+                android:id="@+id/lastMonthStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/from"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toEndOf="@+id/cocktail"
+                app:layout_constraintTop_toBottomOf="@+id/lastMonth" />
+
+            <TextView
+                android:id="@+id/lastMonthEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/end"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toEndOf="@+id/cocktail"
+                app:layout_constraintTop_toBottomOf="@+id/lastMonthStart" />
+
+            <TextView
+                android:id="@+id/lastMonthBeer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_beer"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toEndOf="@+id/cocktail"
+                app:layout_constraintTop_toBottomOf="@+id/lastMonthEnd" />
+
+            <TextView
+                android:id="@+id/lastMonthWine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_wine"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toEndOf="@+id/cocktail"
+                app:layout_constraintTop_toBottomOf="@+id/lastMonthBeer" />
+
+            <TextView
+                android:id="@+id/lastMonthCocktails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_cocktails"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toEndOf="@+id/cocktail"
+                app:layout_constraintTop_toBottomOf="@+id/lastMonthWine" />
+
+            <TextView
+                android:id="@+id/lastMonthShots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_shots"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toEndOf="@+id/cocktail"
+                app:layout_constraintTop_toBottomOf="@+id/lastMonthCocktails" />
+
+
+            <TextView
+                android:id="@+id/lastYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/last_year"
+                android:textAlignment="center"
+                android:textSize="@dimen/statistic_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cocktail" />
+
+            <ImageView
+                android:id="@+id/shot"
+                android:layout_width="165dp"
+                android:layout_height="165dp"
+                android:padding="5dip"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:src="@drawable/ic_shot_asd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lastYear" />
+
+            <TextView
+                android:id="@+id/lastYearStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/from"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lastYear" />
+
+            <TextView
+                android:id="@+id/lastYearEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/end"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lastYearStart" />
+
+            <TextView
+                android:id="@+id/lastYearBeer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_beer"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lastYearEnd" />
+
+            <TextView
+                android:id="@+id/lastYearWine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_wine"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lastYearBeer" />
+
+            <TextView
+                android:id="@+id/lastYearCocktails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_cocktails"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lastYearWine" />
+
+            <TextView
+                android:id="@+id/lastYearShots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_shots"
+
+                android:textSize="@dimen/statistic_details"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lastYearCocktails" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/shot" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

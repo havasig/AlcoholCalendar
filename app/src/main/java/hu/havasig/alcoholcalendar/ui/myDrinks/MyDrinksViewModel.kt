@@ -18,4 +18,15 @@ class MyDrinksViewModel @Inject constructor(private val drinkRepository: DrinkRe
 			drinkRepository.updateDrinks()
 		}
 	}
+
+	fun deleteDrink(drink: Drink) {
+		viewModelScope.launch {
+			drinkRepository.deleteDrink(drink)
+		}
+	}
+	fun restoreDrink(drinkId: Int) {
+		viewModelScope.launch {
+			drinkRepository.restoreDrink(drinkId)
+		}
+	}
 }

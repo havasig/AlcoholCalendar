@@ -16,10 +16,10 @@ import hu.havasig.alcoholcalendar.data.model.DrinkType
 
 @Database(
 	entities = [Drink::class, DrinkType::class, Challenge::class],
-	version = 7,
+	version = 9,
 	exportSchema = false
 )
-@TypeConverters(DateConverter::class)
+@TypeConverters(DateConverter::class, DrinkTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 	abstract fun drinkDao(): DrinkDao
 	abstract fun drinkTypeDao(): DrinkTypeDao

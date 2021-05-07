@@ -28,9 +28,9 @@ class AddDrinkViewModel @Inject constructor(
 		}
 	}
 
-	fun updateDrink(drinkId: Int, drink: Drink) {
+	fun updateDrink(drink: Drink) {
 		viewModelScope.launch {
-			drinkRepository.updateDrink(drinkId, drink)
+			drinkRepository.updateDrink(drink)
 		}
 	}
 

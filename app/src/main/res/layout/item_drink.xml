@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <ImageView
+        android:id="@+id/drinkIv"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/ic_drink" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/drinkNameTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/beer"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/drinkPercentageTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(7%)"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/drinkAmountTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.04 Liter"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/drinkDateTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2021.02.02"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/editDrinkBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit" />
+
+        <ImageButton
+            android:id="@+id/deleteDrinkBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete" />
+    </LinearLayout>
+
+</LinearLayout>

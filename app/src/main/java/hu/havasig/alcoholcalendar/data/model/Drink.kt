@@ -2,8 +2,8 @@ package hu.havasig.alcoholcalendar.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import hu.havasig.alcoholcalendar.data.model.dto.DrinkDto
 import java.util.*
 
 @Entity(tableName = "drinks")
@@ -21,8 +21,23 @@ data class Drink(
     var amount: Double? = null,
     @SerializedName("date")
     var date: Date? = null,
+    @SerializedName("drink_type")
+    var type: DrinkType,
     @SerializedName("last_update")
     var lastUpdate: Date,
     @SerializedName("is_deleted")
     var isDeleted: Boolean = false
-)
+) {
+	fun toDrinkDto(): DrinkDto {
+		return DrinkDto(
+            serverId,
+            id,
+            name,
+            percentage,
+            amount,
+            date,
+            type.toDrinkTypeDto(),
+            isDeleted
+        )
+	}
+}

@@ -1,6 +1,5 @@
 package hu.havasig.alcoholcalendar.data.repository
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import hu.havasig.alcoholcalendar.data.api.ServiceBuilder
 import hu.havasig.alcoholcalendar.data.api.StatisticApi

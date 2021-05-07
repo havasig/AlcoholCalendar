@@ -12,6 +12,9 @@ interface DrinkDao {
 	@Query("SELECT * FROM drinks")
 	suspend fun getAll(): List<Drink>
 
+	@Query("SELECT * FROM drinks WHERE id IN (:drinkId)")
+	suspend fun getById(drinkId: Int): Drink?
+
 	@Insert(onConflict = REPLACE)
 	suspend fun save(drinks: List<Drink>)
 

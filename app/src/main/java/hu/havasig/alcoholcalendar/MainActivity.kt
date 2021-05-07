@@ -22,12 +22,13 @@ class MainActivity : AppCompatActivity() {
 	private lateinit var appBarConfiguration: AppBarConfiguration
 
 	override fun onCreate(savedInstanceState: Bundle?) {
+		AppPreferences.setup(applicationContext)
+
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 		val toolbar: Toolbar = findViewById(R.id.toolbar)
 		setSupportActionBar(toolbar)
 
-		AppPreferences.setup(applicationContext)
 
 		val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
 		val navView: NavigationView = findViewById(R.id.nav_view)

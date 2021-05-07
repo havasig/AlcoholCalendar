@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import hu.havasig.alcoholcalendar.R
 import hu.havasig.alcoholcalendar.data.model.Drink
+import hu.havasig.alcoholcalendar.data.model.DrinkType
 import java.util.*
 
 @AndroidEntryPoint
@@ -29,14 +30,39 @@ class AddDrinkFragment : Fragment() {
 		addDrinkViewModel =
 			ViewModelProvider(this).get(AddDrinkViewModel::class.java)
 		val root = inflater.inflate(R.layout.fragment_add_drink, container, false)
-		val textView: TextView = root.findViewById(R.id.text_add_drink)
-		addDrinkViewModel.createDrink(Drink(1,null,"beer", 30, 2.0, null, Calendar.getInstance().time))
+		val textView: TextView = root.findViewById(R.id.liter)
+		val drinkType = DrinkType(1, "beer", 4, 4.6, false)
+		val drinkType2 = DrinkType(2, "jagerbomb", 2, 4.1, false)
+		addDrinkViewModel.createDrink(
+			Drink(
+				1,
+				null,
+				"beer",
+				30,
+				2.0,
+				null,
+				drinkType,
+				Calendar.getInstance().time
+			)
+		)
+		addDrinkViewModel.createDrink(
+			Drink(
+				2,
+				null,
+				"Jagerbomba",
+				30,
+				2.0,
+				null,
+				drinkType2,
+				Calendar.getInstance().time
+			)
+		)
 		addDrinkViewModel.updateMyDrinkTypes()
 		addDrinkViewModel.drinkTypes.observe(viewLifecycleOwner, {
 			if (it.isNotEmpty()) {
 				textView.text = it[0].name
 			} else
-				textView.text = "You have no drink type"
+				textView.text = "Liter"
 		})
 		return root
 	}
