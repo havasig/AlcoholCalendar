@@ -8,6 +8,12 @@ data class StatisticDetails (
     val from: Date? = null,
     @SerializedName("to")
     val to: Date? = null,
-    @SerializedName("drink_types")
-    var drinkTypes: MutableList<DrinkType> = mutableListOf()
+    @SerializedName("beer")
+    var beer: Int? = null,
+    @SerializedName("wine")
+    var wine: Int? = null,
+    @SerializedName("cocktail")
+    var cocktail: Int? = null,
+    @SerializedName("shots")
+    var shots: Int? = null
 )

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
@@ -37,27 +38,30 @@ class AddDrinkFragment : Fragment() {
 	private lateinit var datePicker: DatePicker
 	private var setType = false
 	private var currentDrinkType: DrinkType? = null
+	private var loadedDrinkId: Int? = null
+	private var loadedDrinkServerId: Int? = null
 
 	private val textWatcher = object : TextWatcher {
 		override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 		override fun afterTextChanged(p0: Editable?) {}
 		override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-			if (!setType) selectCustomDrinkType()
+			if (!setType) selectDrinkType(resources.getString(R.string.custom))
 		}
 	}
 
-	private fun selectCustomDrinkType() {
+	private fun selectDrinkType(type: String?) {
+		val chosenType = type ?: resources.getString(R.string.custom)
 		val count: Int = firstRadioGroup.childCount
 		for (i in 0 until count) {
 			val o: View = firstRadioGroup.getChildAt(i)
-			if (o is RadioButton && o.text == resources.getString(R.string.custom)) {
+			if (o is RadioButton && o.text == chosenType) {
 				o.isChecked = true
 			}
 		}
 		val count2: Int = secondRadioGroup.childCount
 		for (i in 0 until count2) {
 			val o: View = secondRadioGroup.getChildAt(i)
-			if (o is RadioButton && o.text == resources.getString(R.string.custom)) {
+			if (o is RadioButton && o.text == chosenType) {
 				o.isChecked = true
 			}
 		}
@@ -71,6 +75,7 @@ class AddDrinkFragment : Fragment() {
 		addDrinkViewModel =
 			ViewModelProvider(this).get(AddDrinkViewModel::class.java)
 		rootlayout = inflater.inflate(R.layout.fragment_add_drink, container, false)
+
 		firstRadioGroup = rootlayout!!.findViewById(R.id.firstRadioGroup)
 		secondRadioGroup = rootlayout!!.findViewById(R.id.secondRadioGroup)
 		saveDrinkTypeBtn = rootlayout!!.findViewById(R.id.saveDrinkTypeBtn)
@@ -97,10 +102,85 @@ class AddDrinkFragment : Fragment() {
 			)
 		)
 
-		saveDrinkTypeBtn.setOnClickListener { saveDrinkType() }
-		saveDrinkBtn.setOnClickListener { saveDrink() }
+		loadData()
+
+		if (loadedDrinkId != null) {
+			//update
+			saveDrinkTypeBtn.isGone = true
+			saveDrinkBtn.text = getString(R.string.update_drink)
+			saveDrinkBtn.setOnClickListener { updateDrink() }
+		} else {
+			//save
+			saveDrinkTypeBtn.setOnClickListener { saveDrinkType() }
+			saveDrinkBtn.setOnClickListener { saveDrink() }
+		}
 
 		return rootlayout
+	}
+
+	private fun updateDrink() {
+		if (nameEt.text.toString() == "") {
+			showSnackbar("Name must not be empty")
+			return
+		}
+		try {
+			val percentage = getPercentage()
+			val amount = getAmount()
+			val date = getDate()
+			addDrinkViewModel.updateDrink(
+				Drink(
+					loadedDrinkId,
+					loadedDrinkServerId,
+					nameEt.text.toString(),
+					percentage,
+					amount,
+					date,
+					currentDrinkType,
+					Calendar.getInstance().time
+				)
+			)
+			showSnackbar("Drink updated")
+		} catch (ex: NumberFormatException) {
+			showSnackbar("Percentage and amount must be number")
+			return
+		} catch (ex: Exception) {
+			showSnackbar(ex.message!!)
+			return
+		}
+		nameEt.setText("", TextView.BufferType.EDITABLE)
+		amountEt.setText("", TextView.BufferType.EDITABLE)
+		percentageEt.setText("", TextView.BufferType.EDITABLE)
+	}
+
+	private fun loadData(): String? {
+		var loadedType: String? = null
+		val drinkId = arguments?.getInt("drinkId")
+		if (drinkId != 0) {
+			loadedDrinkId = drinkId
+			addDrinkViewModel.drinks.observe(viewLifecycleOwner, { drinkList ->
+				if (drinkList.isNotEmpty()) {
+					drinkList.find { drink -> drink.id == drinkId }?.let { oldDrink ->
+						loadedDrinkServerId = oldDrink.serverId
+						nameEt.setText(oldDrink.name, TextView.BufferType.EDITABLE)
+						oldDrink.percentage?.let {
+							percentageEt.setText(it.toString(), TextView.BufferType.EDITABLE)
+						}
+						oldDrink.amount?.let {
+							amountEt.setText(it.toString(), TextView.BufferType.EDITABLE)
+						}
+						val cal = Calendar.getInstance()
+						cal.time = oldDrink.date!!
+						val year = cal[Calendar.YEAR]
+						val month = cal[Calendar.MONTH]
+						val day = cal[Calendar.DAY_OF_MONTH]
+						datePicker.updateDate(year, month, day)
+
+						oldDrink.type?.let { loadedType = it.name }
+					}
+				}
+			})
+		}
+		return loadedType
 	}
 
 	private val listener1: RadioGroup.OnCheckedChangeListener =
@@ -143,7 +223,7 @@ class AddDrinkFragment : Fragment() {
 					)
 					amountEt.setText(chosenType.amount.toString(), TextView.BufferType.EDITABLE)
 					setType = false
-				}
+				} ?: run { currentDrinkType = null }
 			}
 		})
 	}
@@ -203,6 +283,9 @@ class AddDrinkFragment : Fragment() {
 			showSnackbar(ex.message!!)
 			return
 		}
+		nameEt.setText("", TextView.BufferType.EDITABLE)
+		amountEt.setText("", TextView.BufferType.EDITABLE)
+		percentageEt.setText("", TextView.BufferType.EDITABLE)
 	}
 
 	private fun saveDrinkType() {
@@ -234,6 +317,7 @@ class AddDrinkFragment : Fragment() {
 			amountEt.setText("", TextView.BufferType.EDITABLE)
 			percentageEt.setText("", TextView.BufferType.EDITABLE)
 			showSnackbar("New type saved")
+			addDrinkViewModel.updateMyDrinkTypes()
 			loadDrinkTypes()
 		} catch (ex: NumberFormatException) {
 			showSnackbar("Percentage and amount must be number")
@@ -245,8 +329,6 @@ class AddDrinkFragment : Fragment() {
 	}
 
 	private fun loadDrinkTypes() {
-		addDrinkViewModel.getDrinkTypes()
-		//addDrinkViewModel.updateMyDrinkTypes()
 		addDrinkViewModel.drinkTypes.observe(viewLifecycleOwner, {
 			if (it.isNotEmpty()) {
 				addRadioButtons(it)

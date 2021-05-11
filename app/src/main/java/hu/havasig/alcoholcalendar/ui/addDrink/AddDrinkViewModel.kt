@@ -8,6 +8,7 @@ import hu.havasig.alcoholcalendar.data.model.DrinkType
 import hu.havasig.alcoholcalendar.data.repository.DrinkRepository
 import hu.havasig.alcoholcalendar.data.repository.DrinkTypeRepository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,6 +17,15 @@ class AddDrinkViewModel @Inject constructor(
 	private val drinkRepository: DrinkRepository
 ) : ViewModel() {
 	val drinkTypes = drinkTypeRepository.myDrinkTypes
+	val drinks = drinkRepository.myDrinks
+
+	init {
+		runBlocking {
+			drinkRepository.updateDrinks()
+			getDrinkTypesFromServer()
+			updateMyDrinkTypes()
+		}
+	}
 
 	fun updateMyDrinkTypes() {
 		viewModelScope.launch {
@@ -23,9 +33,9 @@ class AddDrinkViewModel @Inject constructor(
 		}
 	}
 
-	fun getDrinkTypes() {
+	private fun getDrinkTypesFromServer() {
 		viewModelScope.launch {
-			drinkTypeRepository.getDrinkTypes()
+			drinkTypeRepository.getDrinkTypesFromServer()
 		}
 	}
 

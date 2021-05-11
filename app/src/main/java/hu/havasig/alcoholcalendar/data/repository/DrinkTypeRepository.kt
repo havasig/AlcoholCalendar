@@ -32,15 +32,10 @@ class DrinkTypeRepository @Inject constructor(
 		}
 	}
 
-	suspend fun getDrinkTypes() {
-		val currentDrinkTypes = drinkTypeDao.getAll()
-		myDrinkTypes.postValue(currentDrinkTypes.filter { drinkType -> !drinkType.isDeleted })
+	suspend fun getDrinkTypesFromServer() {
 		try {
 			val serverDrinkTypes = drinkTypeService.getDrinkTypes()
-			serverDrinkTypes?.let {
-				myDrinkTypes.postValue(it.filter { drinkType -> !drinkType.isDeleted })
-				drinkTypeDao.save(it)
-			}
+			serverDrinkTypes?.let { drinkTypeDao.save(it) }
 		} catch (e: Exception) {
 			e.printStackTrace()
 			//no need to update without connection

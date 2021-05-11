@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -78,11 +79,8 @@ class MyDrinksFragment :
 	}
 
 	override fun onDrinkSelected(drink: Drink) {
-		Navigation.findNavController(rootlayout!!).navigate(R.id.nav_add_drink)
-
-		val action = AddDrinkFragmentDirections.confirmationAction(drink.id)
-		rootlayout!!.findNavController().navigate(action)
-		Navigation.findNavController(rootlayout!!).navigate(R.id.nav_add_drink)
+		val bundle = bundleOf("drinkId" to drink.id)
+		rootlayout!!.findNavController().navigate(R.id.nav_add_drink, bundle)
 	}
 
 	override fun onDrinkDelete(viewHolder: MyDrinksAdapter.ViewHolder, drink: Drink) {

@@ -5,12 +5,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import hu.havasig.alcoholcalendar.data.AppDatabase
 import hu.havasig.alcoholcalendar.data.api.DrinkApi
-import hu.havasig.alcoholcalendar.data.api.DrinkTypeApi
 import hu.havasig.alcoholcalendar.data.api.ServiceBuilder
 import hu.havasig.alcoholcalendar.data.dao.DrinkDao
-import hu.havasig.alcoholcalendar.data.dao.DrinkTypeDao
 import hu.havasig.alcoholcalendar.data.model.Drink
-import hu.havasig.alcoholcalendar.data.model.DrinkType
+import java.util.*
 import javax.inject.Inject
 
 class DrinkRepository @Inject constructor(
@@ -35,6 +33,7 @@ class DrinkRepository @Inject constructor(
 
 	suspend fun updateDrink(drink: Drink) {
 		try {
+			drink.lastUpdate = Calendar.getInstance().time
 			drink.serverId = drinkService.updateDrink(drink)?.id
 			drinkDao.save(drink)
 		} catch (e: Exception) {
@@ -51,7 +50,12 @@ class DrinkRepository @Inject constructor(
 			val serverDrinks =
 				drinkService.updateDrinks(currentDrinks)
 			myDrinks.postValue(drinkDao.getAll().filter { drink -> !drink.isDeleted })
-			serverDrinks?.let { drinkDao.save(it) }
+			serverDrinks?.let {
+				for (drink in it) {
+					drink.lastUpdate = Calendar.getInstance().time
+				}
+				drinkDao.save(it)
+			}
 		} catch (e: Exception) {
 			e.printStackTrace()
 			//no need to update without connection
@@ -65,10 +69,12 @@ class DrinkRepository @Inject constructor(
 			drink.serverId?.let {
 				drinkService.deleteDrink(it)
 			}
+			drink.lastUpdate = Calendar.getInstance().time
 			drinkDao.save(drink)
 		} catch (e: Exception) {
 			e.printStackTrace()
 			//save to db without server update
+			drink.lastUpdate = Calendar.getInstance().time
 			drinkDao.save(drink)
 		}
 	}
@@ -81,10 +87,12 @@ class DrinkRepository @Inject constructor(
 			drink.serverId?.let {
 				drinkService.restoreDrink(it)
 			}
+			drink.lastUpdate = Calendar.getInstance().time
 			drinkDao.save(drink)
 		} catch (e: Exception) {
 			e.printStackTrace()
 			//save to db without server update
+			drink.lastUpdate = Calendar.getInstance().time
 			drinkDao.save(drink)
 		}
 	}

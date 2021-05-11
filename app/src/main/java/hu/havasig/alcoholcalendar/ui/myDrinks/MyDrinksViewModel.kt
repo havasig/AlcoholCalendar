@@ -1,6 +1,5 @@
 package hu.havasig.alcoholcalendar.ui.myDrinks
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,8 +9,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyDrinksViewModel @Inject constructor(private val drinkRepository: DrinkRepository) : ViewModel() {
-	var drinks: LiveData<List<Drink>> = drinkRepository.myDrinks
+class MyDrinksViewModel @Inject constructor(private val drinkRepository: DrinkRepository) :
+	ViewModel() {
+	val drinks = drinkRepository.myDrinks
 
 	fun updateDrinks() {
 		viewModelScope.launch {
@@ -24,6 +24,7 @@ class MyDrinksViewModel @Inject constructor(private val drinkRepository: DrinkRe
 			drinkRepository.deleteDrink(drink)
 		}
 	}
+
 	fun restoreDrink(drinkId: Int) {
 		viewModelScope.launch {
 			drinkRepository.restoreDrink(drinkId)
