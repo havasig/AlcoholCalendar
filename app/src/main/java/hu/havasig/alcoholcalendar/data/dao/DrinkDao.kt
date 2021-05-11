@@ -19,5 +19,5 @@ interface DrinkDao {
 	suspend fun save(drinks: List<Drink>)
 
 	@Insert(onConflict = REPLACE)
-	suspend fun save(drink: Drink)
+	suspend fun save(drink: Drink): Long
 }

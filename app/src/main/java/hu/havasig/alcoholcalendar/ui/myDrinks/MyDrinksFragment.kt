@@ -1,5 +1,6 @@
 package hu.havasig.alcoholcalendar.ui.myDrinks
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,18 +9,21 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import hu.havasig.alcoholcalendar.R
 import hu.havasig.alcoholcalendar.data.model.Drink
+import hu.havasig.alcoholcalendar.ui.addDrink.AddDrinkFragment
 
 
 @AndroidEntryPoint
 class MyDrinksFragment :
 	Fragment(),
-	MyDrinksAdapter.OnDrinkClickedListener {
+	MyDrinksAdapter.OnDrinkClickedListener  {
 
 	companion object {
 		fun newInstance() = MyDrinksFragment()
@@ -73,8 +77,12 @@ class MyDrinksFragment :
 		// TODO: Use the ViewModel
 	}
 
-	override fun onDrinkEdit(drink: Drink) {
-		Toast.makeText(activity, "onDrinkEdit", Toast.LENGTH_SHORT).show()
+	override fun onDrinkSelected(drink: Drink) {
+		Navigation.findNavController(rootlayout!!).navigate(R.id.nav_add_drink)
+
+		val action = AddDrinkFragmentDirections.confirmationAction(drink.id)
+		rootlayout!!.findNavController().navigate(action)
+		Navigation.findNavController(rootlayout!!).navigate(R.id.nav_add_drink)
 	}
 
 	override fun onDrinkDelete(viewHolder: MyDrinksAdapter.ViewHolder, drink: Drink) {
@@ -83,7 +91,7 @@ class MyDrinksFragment :
 		Snackbar.make(rootlayout!!, "onDrinkDelete", Snackbar.LENGTH_LONG)
 			.setAction(R.string.undo_string) {
 				myDrinksAdapter.onDrinkRemoveUndo(viewHolderPosition)
-				myDrinksViewModel.restoreDrink(drink.id)
+				myDrinksViewModel.restoreDrink(drink.id!!)
 			}
 			.show()
 	}

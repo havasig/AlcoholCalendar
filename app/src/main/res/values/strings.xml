@@ -38,5 +38,6 @@
     <string name="drink_type">Drink Type</string>
     <string name="beer">Beer</string>
     <string name="you_have_no_drink_yet">You have no drink yet</string>
-    <string name="undo_string">Undo</string>
+	<string name="undo_string">Undo</string>
+	<string name="custom">Custom</string>
 </resources>

@@ -39,7 +39,7 @@ class ChallengeRepository @Inject constructor(
 	suspend fun applyToChallenge(challenge: Challenge) {
 		challenge.amIApplied = true
 		try {
-			challengeService.applyToChallenge(challenge.id)
+			challengeService.applyToChallenge(challenge.id!!)
 		} catch (e: Exception) {
 			e.printStackTrace()
 		}
@@ -59,7 +59,7 @@ class ChallengeRepository @Inject constructor(
 
 	suspend fun updateChallenge(challenge: Challenge): Boolean {
 		return try {
-			challengeService.updateChallenge(challenge.id, challenge)
+			challengeService.updateChallenge(challenge.id!!, challenge)
 			challengeDao.save(challenge)
 			true
 		} catch (e: Exception) {
@@ -71,7 +71,7 @@ class ChallengeRepository @Inject constructor(
 	suspend fun deleteChallenge(challenge: Challenge): Boolean {
 		challenge.isDeleted = true
 		return try {
-			challengeService.deleteChallenge(challenge.id)
+			challengeService.deleteChallenge(challenge.id!!)
 			challengeDao.save(challenge)
 			true
 		} catch (e: Exception) {

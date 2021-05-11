@@ -5,47 +5,41 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import hu.havasig.alcoholcalendar.R
 import hu.havasig.alcoholcalendar.data.model.Drink
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MyDrinksAdapter(
 	private var listener: OnDrinkClickedListener,
 	private val myDrinkList: ArrayList<Drink>
-) :
-	RecyclerView.Adapter<MyDrinksAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MyDrinksAdapter.ViewHolder>() {
 
 	interface OnDrinkClickedListener {
-		fun onDrinkEdit(drink: Drink)
+		fun onDrinkSelected(drink: Drink)
 		fun onDrinkDelete(viewHolder: ViewHolder, drink: Drink)
 	}
 
-	interface DeleteUndoListener : View.OnClickListener {
+	val dateFormat = SimpleDateFormat("yyyy.MM.dd.", Locale.getDefault())
+	private var lastDeletedDrink: Drink? = null
 
-	}
-
-
-	//this method is returning the view for each item in the list
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 		val v =
 			LayoutInflater.from(parent.context).inflate(R.layout.item_drink, parent, false)
 		return ViewHolder(v)
 	}
 
-	//this method is binding the data on the list
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		holder.bindItems(myDrinkList[position])
 	}
 
-	//this method is giving the size of the list
 	override fun getItemCount(): Int {
 		return myDrinkList.size
 	}
-
-	private var lastDeletedDrink: Drink? = null
 
 	fun onDrinkRemove(viewHolder: RecyclerView.ViewHolder): Int {
 		val adapterPosition = viewHolder.layoutPosition
@@ -62,7 +56,6 @@ class MyDrinksAdapter(
 		lastDeletedDrink = null
 	}
 
-	//the class is hodling the list view
 	inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		fun bindItems(myDrink: Drink) {
 			val nameTv: TextView = itemView.findViewById(R.id.drinkNameTV)
@@ -70,24 +63,22 @@ class MyDrinksAdapter(
 			val amountTv: TextView = itemView.findViewById(R.id.drinkAmountTV)
 			val dateTv: TextView = itemView.findViewById(R.id.drinkDateTV)
 			val imageIv: ImageView = itemView.findViewById(R.id.drinkIv)
-			val editBtn: ImageButton = itemView.findViewById(R.id.editDrinkBtn)
 			val deleteBtn: ImageButton = itemView.findViewById(R.id.deleteDrinkBtn)
+			val item: LinearLayout = itemView.findViewById(R.id.drinkItemLL)
 
 			nameTv.text = myDrink.name
 			percentageTv.text =
 				if (myDrink.percentage != null) "(${myDrink.percentage.toString()}%)" else ""
 			amountTv.text = if (myDrink.amount != null) "${myDrink.amount.toString()} Liter" else ""
-			dateTv.text = myDrink.date?.toString() ?: ""
-			when (myDrink.type.name) {
+			dateTv.text = if (myDrink.date != null) dateFormat.format(myDrink.date) else ""
+			when (myDrink.type?.name) {
 				"beer" -> imageIv.setImageResource(R.drawable.ic_beer)
 				"wine" -> imageIv.setImageResource(R.drawable.ic_wine)
 				"cocktail" -> imageIv.setImageResource(R.drawable.ic_cocktail)
 				"shot" -> imageIv.setImageResource(R.drawable.ic_shot)
 			}
-			editBtn.setOnClickListener { listener.onDrinkEdit(myDrink) }
-			deleteBtn.setOnClickListener {
-				listener.onDrinkDelete(this, myDrink)
-			}
+			item.setOnClickListener { listener.onDrinkSelected(myDrink) }
+			deleteBtn.setOnClickListener { listener.onDrinkDelete(this, myDrink) }
 		}
 	}
 }

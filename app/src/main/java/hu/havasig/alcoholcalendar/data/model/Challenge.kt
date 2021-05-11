@@ -9,7 +9,7 @@ import java.util.*
 data class Challenge (
     @SerializedName("id")
     @PrimaryKey
-    var id: Int,
+    var id: Int? = null,
     @SerializedName("name")
     var name: String,
     @SerializedName("description")

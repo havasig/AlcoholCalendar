@@ -16,7 +16,7 @@ import hu.havasig.alcoholcalendar.data.model.DrinkType
 
 @Database(
 	entities = [Drink::class, DrinkType::class, Challenge::class],
-	version = 9,
+	version = 16,
 	exportSchema = false
 )
 @TypeConverters(DateConverter::class, DrinkTypeConverter::class)

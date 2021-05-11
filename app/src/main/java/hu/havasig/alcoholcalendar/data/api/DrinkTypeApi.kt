@@ -8,10 +8,10 @@ import java.util.*
 
 interface DrinkTypeApi {
 	@GET("drink-type")
-	suspend fun getDrinkTypes(): List<DrinkType>
+	suspend fun getDrinkTypes(): List<DrinkType>?
 
 	@POST("drink-type")
-	suspend fun addDrinkType(@Body drinkType: DrinkType)
+	suspend fun createDrinkType(@Body drinkType: DrinkType) : DrinkType?
 
 	@PUT("drink-type")
 	suspend fun updateType(@Body drinkTypes: List<DrinkType>): List<DrinkType>

@@ -5,9 +5,12 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import hu.havasig.alcoholcalendar.data.AppDatabase
 import hu.havasig.alcoholcalendar.data.api.DrinkApi
+import hu.havasig.alcoholcalendar.data.api.DrinkTypeApi
 import hu.havasig.alcoholcalendar.data.api.ServiceBuilder
 import hu.havasig.alcoholcalendar.data.dao.DrinkDao
+import hu.havasig.alcoholcalendar.data.dao.DrinkTypeDao
 import hu.havasig.alcoholcalendar.data.model.Drink
+import hu.havasig.alcoholcalendar.data.model.DrinkType
 import javax.inject.Inject
 
 class DrinkRepository @Inject constructor(
@@ -20,8 +23,8 @@ class DrinkRepository @Inject constructor(
 
 	suspend fun createDrink(drink: Drink) {
 		try {
-			val drinkDto = drink.toDrinkDto()
-			drink.serverId = drinkService.createDrink(drinkDto)?.id
+			drink.id = drinkDao.save(drink).toInt()
+			drink.serverId = drinkService.createDrink(drink)?.serverId
 			drinkDao.save(drink)
 		} catch (e: Exception) {
 			e.printStackTrace()
@@ -32,7 +35,7 @@ class DrinkRepository @Inject constructor(
 
 	suspend fun updateDrink(drink: Drink) {
 		try {
-			drink.serverId = drinkService.updateDrink(drink.toDrinkDto())?.id
+			drink.serverId = drinkService.updateDrink(drink)?.id
 			drinkDao.save(drink)
 		} catch (e: Exception) {
 			e.printStackTrace()
@@ -45,14 +48,10 @@ class DrinkRepository @Inject constructor(
 		val currentDrinks = drinkDao.getAll()
 		myDrinks.postValue(currentDrinks.filter { drink -> !drink.isDeleted })
 		try {
-			val drinkList = currentDrinks.map {
-					drink -> drink.toDrinkDto()
-			}
-				.toList()
 			val serverDrinks =
-				drinkService.updateDrinks(drinkList)
+				drinkService.updateDrinks(currentDrinks)
 			myDrinks.postValue(drinkDao.getAll().filter { drink -> !drink.isDeleted })
-			serverDrinks?.let { drinkDao.save(it.map { drink -> drink.toDrink() }.toList()) }
+			serverDrinks?.let { drinkDao.save(it) }
 		} catch (e: Exception) {
 			e.printStackTrace()
 			//no need to update without connection
