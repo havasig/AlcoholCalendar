@@ -1,4 +1,4 @@
-package hu.havasig.alcoholcalendar.ui.menu
+package hu.havasig.alcoholcalendar.ui.statistics
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,24 +13,27 @@ import androidx.navigation.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import hu.havasig.alcoholcalendar.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 @AndroidEntryPoint
-class MenuFragment : Fragment() {
+class StatisticsFragment : Fragment() {
 
 	companion object {
-		fun newInstance() = MenuFragment()
+		fun newInstance() = StatisticsFragment()
 	}
 
-	private lateinit var menuViewModel: MenuViewModel
+	private lateinit var statisticsViewModel: StatisticsViewModel
+	private val dateFormat = SimpleDateFormat("yyyy.MM.dd.", Locale.getDefault())
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View? {
-		menuViewModel =
-			ViewModelProvider(this).get(MenuViewModel::class.java)
-		val root = inflater.inflate(R.layout.fragment_menu, container, false)
+		statisticsViewModel =
+			ViewModelProvider(this).get(StatisticsViewModel::class.java)
+		val root = inflater.inflate(R.layout.fragment_statistics, container, false)
 		val last7DaysDate: TextView = root.findViewById(R.id.last7DaysDate)
 		val last7DaysBeer: TextView = root.findViewById(R.id.last7DaysBeerValue)
 		val last7DaysWine: TextView = root.findViewById(R.id.last7DaysWineValue)
@@ -58,31 +61,35 @@ class MenuFragment : Fragment() {
 		val statisticsSV: ScrollView = root.findViewById(R.id.statisticsSV)
 		val noStatisticsLL: LinearLayout = root.findViewById(R.id.noStatisticsLL)
 
-		menuViewModel.statistics.observe(viewLifecycleOwner, {
+		statisticsViewModel.statistics.observe(viewLifecycleOwner, {
 			if (it != null) {
-				last7DaysDate.text = "(${it.last7Days?.from.toString()} - ${it.last7Days?.from.toString()})"
-				last7DaysBeer.text = "${it.last7Days?.beer.toString()} l"
-				last7DaysWine.text = "${it.last7Days?.wine.toString()} l"
-				last7DaysCocktails.text = "${it.last7Days?.cocktail.toString()} l"
-				last7DaysShots.text = "${it.last7Days?.shots.toString()} l"
+				last7DaysDate.text =
+					"(${dateFormat.format(it.last7Days?.from)} - ${dateFormat.format(it.last7Days?.to)})"
+				last7DaysBeer.text = "${it.last7Days?.beer} l"
+				last7DaysWine.text = "${it.last7Days?.wine} l"
+				last7DaysCocktails.text = "${it.last7Days?.cocktail} l"
+				last7DaysShots.text = "${it.last7Days?.shots} l"
 
-				lastWeekDate.text = "(${it.lastWeek?.from.toString()} - ${it.last7Days?.from.toString()})"
-				lastWeekBeer.text = "${it.lastWeek?.beer.toString()} l"
-				lastWeekWine.text = "${it.lastWeek?.wine.toString()} l"
-				lastWeekCocktails.text = "${it.lastWeek?.cocktail.toString()} l"
-				lastWeekShots.text = "${it.lastWeek?.shots.toString()} l"
+				lastWeekDate.text =
+					"(${dateFormat.format(it.lastWeek?.from)} - ${dateFormat.format(it.last7Days?.to)})"
+				lastWeekBeer.text = "${it.lastWeek?.beer} l"
+				lastWeekWine.text = "${it.lastWeek?.wine} l"
+				lastWeekCocktails.text = "${it.lastWeek?.cocktail} l"
+				lastWeekShots.text = "${it.lastWeek?.shots} l"
 
-				lastMonthDate.text = "(${it.lastMonth?.from.toString()} - ${it.last7Days?.from.toString()})"
-				lastMonthBeer.text = "${it.lastMonth?.beer.toString()} l"
-				lastMonthWine.text = "${it.lastMonth?.wine.toString()} l"
-				lastMonthCocktails.text = "${it.lastMonth?.cocktail.toString()} l"
-				lastMonthShots.text = "${it.lastMonth?.shots.toString()} l"
+				lastMonthDate.text =
+					"(${dateFormat.format(it.lastMonth?.from)} - ${dateFormat.format(it.last7Days?.to)})"
+				lastMonthBeer.text = "${it.lastMonth?.beer} l"
+				lastMonthWine.text = "${it.lastMonth?.wine} l"
+				lastMonthCocktails.text = "${it.lastMonth?.cocktail} l"
+				lastMonthShots.text = "${it.lastMonth?.shots} l"
 
-				lastYearDate.text = "(${it.lastYear?.from.toString()} - ${it.last7Days?.from.toString()})"
-				lastYearBeer.text = "${it.lastYear?.beer.toString()} l"
-				lastYearWine.text = "${it.lastYear?.wine.toString()} l"
-				lastYearCocktails.text = "${it.lastYear?.cocktail.toString()} l"
-				lastYearShots.text = "${it.lastYear?.shots.toString()} l"
+				lastYearDate.text =
+					"(${dateFormat.format(it.lastYear?.from)} - ${dateFormat.format(it.last7Days?.to)})"
+				lastYearBeer.text = "${it.lastYear?.beer} l"
+				lastYearWine.text = "${it.lastYear?.wine} l"
+				lastYearCocktails.text = "${it.lastYear?.cocktail} l"
+				lastYearShots.text = "${it.lastYear?.shots} l"
 
 				noStatisticsLL.visibility = View.GONE
 				statisticsSV.visibility = View.VISIBLE
@@ -101,7 +108,7 @@ class MenuFragment : Fragment() {
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
-		menuViewModel = ViewModelProvider(this).get(MenuViewModel::class.java)
+		statisticsViewModel = ViewModelProvider(this).get(StatisticsViewModel::class.java)
 		// TODO: Use the ViewModel
 	}
 }

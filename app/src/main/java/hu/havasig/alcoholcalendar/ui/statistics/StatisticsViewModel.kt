@@ -1,4 +1,4 @@
-package hu.havasig.alcoholcalendar.ui.menu
+package hu.havasig.alcoholcalendar.ui.statistics
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MenuViewModel @Inject constructor(private val statisticRepository: StatisticRepository): ViewModel() {
+class StatisticsViewModel @Inject constructor(private val statisticRepository: StatisticRepository): ViewModel() {
 	var statistics: MutableLiveData<Statistic?> = statisticRepository.statistics
 
 	init {

@@ -5,24 +5,20 @@
 
 	<group android:checkableBehavior="single">
 		<item
-				android:id="@+id/nav_menu"
-			android:icon="@drawable/ic_menu_slideshow"
-				android:title="@string/menu_menu" />
+				android:id="@+id/nav_statistics"
+			android:icon="@drawable/ic_statistics"
+				android:title="@string/statistics" />
 		<item
 				android:id="@+id/nav_add_drink"
-			android:icon="@drawable/ic_menu_slideshow"
+			android:icon="@drawable/ic_beer_dark"
 				android:title="@string/menu_add_drink" />
 		<item
 			android:id="@+id/nav_my_drinks"
-			android:icon="@drawable/ic_menu_slideshow"
+			android:icon="@drawable/ic_shot_dark"
 			android:title="@string/menu_my_drinks" />
 		<item
-			android:id="@+id/nav_calendar_view"
-			android:icon="@drawable/ic_menu_slideshow"
-			android:title="@string/menu_calendar_view" />
-		<item
-			android:id="@+id/nav_weekly_challenge"
-			android:icon="@drawable/ic_menu_slideshow"
-			android:title="@string/menu_weekly_challenge" />
+			android:id="@+id/nav_challenges"
+			android:icon="@drawable/ic_cocktail_dark"
+			android:title="@string/menu_challenges" />
 	</group>
 </menu>

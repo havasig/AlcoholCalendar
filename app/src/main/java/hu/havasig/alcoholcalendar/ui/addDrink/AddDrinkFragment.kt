@@ -344,7 +344,6 @@ class AddDrinkFragment : Fragment() {
 
 	override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(itemView, savedInstanceState)
-
 		loadDrinkTypes()
 	}
 
@@ -379,7 +378,6 @@ class AddDrinkFragment : Fragment() {
 		cal[Calendar.DAY_OF_MONTH] = datePicker.dayOfMonth
 		return cal.time
 	}
-
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)

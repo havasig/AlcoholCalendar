@@ -15,22 +15,23 @@ class ChallengeRepository @Inject constructor(
 	private val challengeService = ServiceBuilder.buildService(ChallengeApi::class.java)
 	private val challengeDao = AppDatabase.getDatabase(application).challengeDao()
 
-	val currentChallenges = MutableLiveData<List<Challenge>>()
+	val activeChallenges = MutableLiveData<List<Challenge>>()
+	val challenge = MutableLiveData<Challenge>()
 
 	suspend fun getCurrentChallenges() {
 		val challenges = challengeDao.getAll()
 		val currentDate = Calendar.getInstance().time
 		val activeChallenges = challenges.filter { challenge ->
-			challenge.startDate.before(currentDate) && challenge.endDate.after(currentDate) && !challenge.isDeleted
+			challenge.startDate.before(currentDate) && challenge.endDate.after(currentDate)
 		}
-		currentChallenges.postValue(activeChallenges)
+		this.activeChallenges.postValue(activeChallenges)
 		try {
 			val response = challengeService.updateChallenges(challenges)
 			val activeChallengesFromServer = response.filter { challenge ->
-				challenge.startDate.before(currentDate) && challenge.endDate.after(currentDate) && !challenge.isDeleted
+				challenge.startDate.before(currentDate) && challenge.endDate.after(currentDate)
 			}
-			currentChallenges.postValue(activeChallengesFromServer)
 			challengeDao.save(response)
+			this.activeChallenges.postValue(activeChallengesFromServer)
 		} catch (e: Exception) {
 			e.printStackTrace()
 		}
@@ -68,15 +69,24 @@ class ChallengeRepository @Inject constructor(
 		}
 	}
 
-	suspend fun deleteChallenge(challenge: Challenge): Boolean {
-		challenge.isDeleted = true
+	suspend fun deleteChallenge(challenge: Challenge) {
 		return try {
 			challengeService.deleteChallenge(challenge.id!!)
-			challengeDao.save(challenge)
-			true
 		} catch (e: Exception) {
 			e.printStackTrace()
-			false
+		}
+	}
+
+	suspend fun getChallenge(challengeId: Int) {
+		val challenges = challengeDao.getAll()
+		val challenge = challenges.first { it.id == challengeId }
+		this.challenge.postValue(challenge)
+		try {
+			val response = challengeService.getChallenge(challengeId)
+			this.challenge.postValue(response)
+			challengeDao.save(response)
+		} catch (e: Exception) {
+			e.printStackTrace()
 		}
 	}
 }

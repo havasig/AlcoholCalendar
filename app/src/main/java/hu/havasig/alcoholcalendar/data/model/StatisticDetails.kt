@@ -5,15 +5,15 @@ import java.util.*
 
 data class StatisticDetails (
     @SerializedName("from")
-    val from: Date? = null,
+    val from: Date,
     @SerializedName("to")
-    val to: Date? = null,
+    val to: Date,
     @SerializedName("beer")
-    var beer: Int? = null,
+    var beer: Double? = null,
     @SerializedName("wine")
-    var wine: Int? = null,
+    var wine: Double? = null,
     @SerializedName("cocktail")
-    var cocktail: Int? = null,
+    var cocktail: Double? = null,
     @SerializedName("shots")
-    var shots: Int? = null
+    var shots: Double? = null
 )

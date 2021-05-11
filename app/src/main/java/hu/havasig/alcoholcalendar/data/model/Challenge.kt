@@ -10,6 +10,8 @@ data class Challenge (
     @SerializedName("id")
     @PrimaryKey
     var id: Int? = null,
+    @SerializedName("server_id")
+    var serverId: Int? = null,
     @SerializedName("name")
     var name: String,
     @SerializedName("description")
@@ -21,7 +23,5 @@ data class Challenge (
     @SerializedName("end_date")
     var endDate: Date,
     @SerializedName("am_i_applied")
-    var amIApplied: Boolean,
-    @SerializedName("is_deleted")
-    var isDeleted: Boolean
+    var amIApplied: Boolean
 )

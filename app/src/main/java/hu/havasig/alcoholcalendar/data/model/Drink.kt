@@ -19,7 +19,7 @@ data class Drink(
     @SerializedName("amount")
     var amount: Double? = null,
     @SerializedName("date")
-    var date: Date? = null,
+    var date: Date,
     @SerializedName("drink_type")
     var type: DrinkType? = null,
     @SerializedName("last_update")

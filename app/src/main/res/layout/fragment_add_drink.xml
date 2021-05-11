@@ -24,8 +24,9 @@
                 android:id="@+id/drinkTypeTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/drink_type"
-                android:textSize="20sp"
+                android:text="@string/choose_drink_type"
+                android:textSize="@dimen/statistic_title"
+                android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

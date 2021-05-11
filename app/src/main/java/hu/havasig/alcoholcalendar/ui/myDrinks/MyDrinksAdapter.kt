@@ -70,7 +70,7 @@ class MyDrinksAdapter(
 			percentageTv.text =
 				if (myDrink.percentage != null) "(${myDrink.percentage.toString()}%)" else ""
 			amountTv.text = if (myDrink.amount != null) "${myDrink.amount.toString()} Liter" else ""
-			dateTv.text = if (myDrink.date != null) dateFormat.format(myDrink.date) else ""
+			dateTv.text = dateFormat.format(myDrink.date)
 			when (myDrink.type?.name) {
 				"beer" -> imageIv.setImageResource(R.drawable.ic_beer)
 				"wine" -> imageIv.setImageResource(R.drawable.ic_wine)

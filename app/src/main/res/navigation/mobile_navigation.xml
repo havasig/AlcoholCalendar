@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_menu">
+    app:startDestination="@+id/nav_statistics">
 
     <fragment
-        android:id="@+id/nav_menu"
-        android:name="hu.havasig.alcoholcalendar.ui.menu.MenuFragment"
-        android:label="@string/menu_menu"
-        tools:layout="@layout/fragment_menu" />
+        android:id="@+id/nav_statistics"
+        android:name="hu.havasig.alcoholcalendar.ui.statistics.StatisticsFragment"
+        android:label="@string/menu_statistics"
+        tools:layout="@layout/fragment_statistics" />
 
     <fragment
         android:id="@+id/nav_add_drink"
         android:name="hu.havasig.alcoholcalendar.ui.addDrink.AddDrinkFragment"
         android:label="@string/menu_add_drink"
-        tools:layout="@layout/fragment_add_drink" >
+        tools:layout="@layout/fragment_add_drink">
         <argument
             android:name="drinkId"
-            app:argType="integer"
-            android:defaultValue="@null" />
+            android:defaultValue="@null"
+            app:argType="integer" />
     </fragment>
 
     <fragment
@@ -29,14 +29,19 @@
         tools:layout="@layout/fragment_my_drinks" />
 
     <fragment
-        android:id="@+id/nav_calendar_view"
-        android:name="hu.havasig.alcoholcalendar.ui.calendarView.CalendarViewFragment"
-        android:label="@string/menu_calendar_view"
-        tools:layout="@layout/fragment_calendar_view" />
+        android:id="@+id/nav_challenges"
+        android:name="hu.havasig.alcoholcalendar.ui.challenges.list.ChallengesFragment"
+        android:label="@string/menu_challenges"
+        tools:layout="@layout/fragment_challenges" />
 
     <fragment
-        android:id="@+id/nav_weekly_challenge"
-        android:name="hu.havasig.alcoholcalendar.ui.weeklyChallenge.WeeklyChallengeFragment"
-        android:label="@string/menu_weekly_challenge"
-        tools:layout="@layout/fragment_weekly_challenge" />
+        android:id="@+id/nav_challenge_details"
+        android:name="hu.havasig.alcoholcalendar.ui.challenges.details.ChallengeDetailsFragment"
+        android:label="@string/menu_challenge_details"
+        tools:layout="@layout/fragment_challenge_details">
+        <argument
+            android:name="challengeId"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
 </navigation>
