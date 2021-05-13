@@ -36,8 +36,7 @@ class ChallengeDetailsFragment : Fragment() {
 		val challengeNameTv: TextView = rootLayout!!.findViewById(R.id.challengeNameTv)
 		val challengeDescriptionTv: TextView =
 			rootLayout!!.findViewById(R.id.challengeDescriptionTv)
-		val challengeStartDateTv: TextView = rootLayout!!.findViewById(R.id.challengeStartDateTv)
-		val challengeEndDateTv: TextView = rootLayout!!.findViewById(R.id.challengeEndDateTv)
+		val challengeStartDateTv: TextView = rootLayout!!.findViewById(R.id.challengeDateTv)
 
 		val challengeId = arguments?.getInt("challengeId")!!
 		challengeDetailsViewModel.getChallenge(challengeId)
@@ -46,10 +45,12 @@ class ChallengeDetailsFragment : Fragment() {
 			challengeNameTv.setText(it.name, TextView.BufferType.EDITABLE)
 			challengeDescriptionTv.setText(it.description, TextView.BufferType.EDITABLE)
 			challengeStartDateTv.setText(
-				dateFormat.format(it.startDate),
-				TextView.BufferType.EDITABLE
+				"(${dateFormat.format(it.startDate)} - ${
+					dateFormat.format(
+						it.endDate
+					)
+				})", TextView.BufferType.EDITABLE
 			)
-			challengeEndDateTv.setText(dateFormat.format(it.endDate), TextView.BufferType.EDITABLE)
 		})
 
 

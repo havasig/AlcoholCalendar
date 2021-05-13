@@ -4,41 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="32dp"
     tools:context=".ui.challenges.details.ChallengeDetailsFragment">
 
     <TextView
         android:id="@+id/challengeNameTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="name"
-        android:textSize="20sp"
+        android:text="@string/challenge_name"
+        android:textSize="@dimen/statistic_title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/challengeDateTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/challengeNameTv" />
 
     <TextView
         android:id="@+id/challengeDescriptionTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="description"
-        android:textSize="20sp"
+        android:layout_gravity="fill_vertical"
+        android:text="@string/challenge_description"
+        android:textSize="@dimen/statistic_details"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/challengeNameTv" />
+        app:layout_constraintTop_toBottomOf="@+id/challengeDateTv" />
 
-    <TextView
-        android:id="@+id/challengeStartDateTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="start date"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/challengeDescriptionTv" />
-
-    <TextView
-        android:id="@+id/challengeEndDateTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="end date"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/challengeStartDateTv" />
 </androidx.constraintlayout.widget.ConstraintLayout>

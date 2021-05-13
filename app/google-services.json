@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "579654926342",
+    "project_id": "alcohol-calendar-2843c",
+    "storage_bucket": "alcohol-calendar-2843c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579654926342:android:321b6bf8979c7510f60387",
+        "android_client_info": {
+          "package_name": "hu.havasig.alcoholcalendar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "579654926342-vfvalots3b7uv54fvjm44sc59peu0kpj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRm65B-g2w_XQYDO4DEa44xrEzUNWDSI4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "579654926342-vfvalots3b7uv54fvjm44sc59peu0kpj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

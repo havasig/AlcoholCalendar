@@ -1,84 +1,98 @@
 plugins {
-	id 'com.android.application'
-	id 'kotlin-android'
-	id 'kotlin-kapt'
-	id 'dagger.hilt.android.plugin'
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'  // Google Services plugin
 }
 
 android {
-	compileSdkVersion 30
+    compileSdkVersion 30
 
-	defaultConfig {
-		applicationId "hu.havasig.alcoholcalendar"
-		minSdkVersion 24
-		targetSdkVersion 30
-		versionCode 1
-		versionName "1.0"
+    defaultConfig {
+        applicationId "hu.havasig.alcoholcalendar"
+        minSdkVersion 24
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
 
-		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-	}
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
 
-	buildTypes {
-		release {
-			minifyEnabled false
-			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-		}
-	}
-	compileOptions {
-		sourceCompatibility JavaVersion.VERSION_1_8
-		targetCompatibility JavaVersion.VERSION_1_8
-	}
-	kotlinOptions {
-		jvmTarget = '1.8'
-	}
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
 
-	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-	implementation 'androidx.core:core-ktx:1.3.2'
-	implementation 'androidx.appcompat:appcompat:1.2.0'
-	implementation 'com.google.android.material:material:1.3.0'
-	implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-	implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-	implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-	implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
-	implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-	implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-	implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-	testImplementation 'junit:junit:4.13.2'
-	androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-	androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.32"
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-	// Add Dagger Hilt
-	implementation "com.google.dagger:hilt-android:$hilt_version"
-	kapt "com.google.dagger:hilt-compiler:$hilt_version"
-	kapt "androidx.hilt:hilt-compiler:$androidx_hilt_version"
-	implementation "androidx.hilt:hilt-lifecycle-viewmodel:$androidx_hilt_version"
-	annotationProcessor 'com.google.dagger:hilt-android-compiler:2.30-alpha'
+    // Add Dagger Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    kapt "androidx.hilt:hilt-compiler:$androidx_hilt_version"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$androidx_hilt_version"
+    annotationProcessor 'com.google.dagger:hilt-android-compiler:2.30-alpha'
 
-	//Add Retrofit
-	implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.9.0'
+    //Add Retrofit
+    implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.9.0'
 
-	//Add okhttp
-	implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.9.1'
-	implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '4.9.1'
+    //Add okhttp
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.9.1'
+    implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '4.9.1'
 
-	//Add gson
-	implementation group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.9.0'
+    //Add gson
+    implementation group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.9.0'
 
-	//Add room
-	def room_version = "2.3.0"
-	implementation "androidx.room:room-runtime:$room_version"
-	kapt "androidx.room:room-compiler:$room_version"
-	// optional - Kotlin Extensions and Coroutines support for Room
-	implementation "androidx.room:room-ktx:$room_version"
-	// optional - Test helpers
-	testImplementation "androidx.room:room-testing:$room_version"
+    //Add room
+    def room_version = "2.3.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+    // optional - Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
 
-	//recycle view
-	implementation "androidx.recyclerview:recyclerview:1.2.0"
-	// For control over item selection of both touch and mouse driven selection
-	implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
+    //recycle view
+    implementation "androidx.recyclerview:recyclerview:1.2.0"
+    // For control over item selection of both touch and mouse driven selection
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
+
+
+    //FIREBASE
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:28.0.0')
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    // Declare the dependency for the Firebase SDK for Google Analytics
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // Declare the dependencies for any other desired Firebase products
+    // For example, declare the dependencies for Firebase Authentication and Cloud Firestore
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
 }
