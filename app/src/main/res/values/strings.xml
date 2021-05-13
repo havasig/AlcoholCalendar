@@ -48,4 +48,5 @@
 	<string name="statistics_unavailable">Statistics are unavailable.\nCheck your internet connection</string>
     <string name="statistics">Statistics</string>
     <string name="challenge_description">Challenge description</string>
+    <string name="crash">Crash</string>
 </resources>

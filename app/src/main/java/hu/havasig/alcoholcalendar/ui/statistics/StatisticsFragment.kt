@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -60,6 +61,10 @@ class StatisticsFragment : Fragment() {
 
 		val statisticsSV: ScrollView = root.findViewById(R.id.statisticsSV)
 		val noStatisticsLL: LinearLayout = root.findViewById(R.id.noStatisticsLL)
+
+		val crashButton: Button = root.findViewById(R.id.crashButton)
+
+		crashButton.setOnClickListener { throw RuntimeException("Crash") }
 
 		statisticsViewModel.statistics.observe(viewLifecycleOwner, {
 			if (it != null) {
